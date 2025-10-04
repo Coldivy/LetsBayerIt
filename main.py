@@ -30,8 +30,11 @@ def generate_Bayer_Matrix(n):
 # 遍历当前目录中的文件
 for filename in os.listdir('./'):
     filepath = os.path.join('./', filename)
+    if 'output' in filename:
+        continue
     try:
         with Image.open(filepath) as img:
+            print(f"正在处理{filename}")
             im = img
             # 转换为灰度图像
             im = im.convert("L")
@@ -60,8 +63,8 @@ for filename in os.listdir('./'):
             # 将结果转换为图像并保存
             result_im = Image.fromarray(out, mode='L')
             result_im.show()
-            result_im.save('output.png')
-            break  # 处理第一个图像后退出循环
+            result_im.save(f'{filename}_output.png')
+            #break  # 处理第一个图像后退出循环
     except IOError:
         pass
 
